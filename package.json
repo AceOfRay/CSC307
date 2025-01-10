@@ -8,7 +8,10 @@
   },
   "author": "",
   "license": "ISC",
-  "workspaces" : [
+  "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "getting-started": "file:"
+  }
 }
