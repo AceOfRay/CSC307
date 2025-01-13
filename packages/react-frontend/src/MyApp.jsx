@@ -1,7 +1,9 @@
-import React from "react";
+// src/MyApp.jsx
+import React, { useState } from "react";
 import Table from "./Table";
 
-const characters = [
+export default function MyApp() {
+  const [characters, setCharacters] = useState([
     {
       name: "Charlie",
       job: "Janitor"
@@ -18,12 +20,19 @@ const characters = [
       name: "Dennis",
       job: "Bartender"
     }
-  ];
+  ]);
 
-export default function MyApp() {
+  function removeOneCharacter(index) {
+    const updated = characters.filter((character, i) => {
+      return i !== index;
+    });
+    setCharacters(updated);
+  }
+
   return (
-    <div>
-        <Table characterData={characters}/>
+    <div className="container">
+      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      
     </div>
   );
 }
