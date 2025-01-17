@@ -6,3 +6,5 @@ export const findUserByName = (name) => {
     );
   };
 
+export const findUserById = (id) =>
+  users["users_list"].find((user) => user["id"] === id);
