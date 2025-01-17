@@ -1,6 +1,6 @@
 import express from "express";
 import { users } from "./data.js";
-import { findUserByName, findUserById } from "./functions.js";
+import { findUserByName, findUserById, addUser, deleteUserById, findMatchingUsers} from "./functions.js";
 
 const app = express();
 const port = 8000;
@@ -31,6 +31,35 @@ app.get("/users/:id", (req, res) => {
     res.send(result);
   }
 });
+
+app.get("/users/:job/:name", (req, res) => {
+  const job = req.params.job;
+  const name = req.params.name;
+
+  let matchingPeople = findMatchingUsers(job, name);
+  if (matchingPeople === undefined) {
+    res.status(500).send("Internal Server Error");
+  } else {
+    res.send(matchingPeople);
+  }
+})
+
+app.post("/users", (req, res) => {
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  res.send();
+});
+
+app.delete("/users/:id", (req, res) => {
+  const idToDelete = req.params["id"];
+  const newList = deleteUserById(idToDelete)
+  if (newList === undefined) {
+    res.status(500).send("Internal Server Error")
+  } else {
+    const result = { users_list: newList };
+    res.send(result);
+  }
+})
 
 app.listen(port, () => {
   console.log(
