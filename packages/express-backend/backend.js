@@ -1,11 +1,12 @@
 import express from "express";
 import { users } from "./data.js";
 import { findUserByName, findUserById, addUser, deleteUserById, findMatchingUsers} from "./functions.js";
-
+import cors from "cors";
 const app = express();
 const port = 8000;
 
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); 
 
 app.get("/", (req, res) => {
   res.send("Hello");
