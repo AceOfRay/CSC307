@@ -16,7 +16,15 @@ export default function MyApp() {
 
   function updateList(person) {
     postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((promise) => {
+        if (promise.status === 201) {
+          promi
+          console.log(promise.body);
+          setCharacters([...characters, person])
+        } else {
+          console.log(`Status Code ${promise.status} | User not created`)
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -25,7 +33,10 @@ export default function MyApp() {
   useEffect(() => {
     fetchUsers()
       .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
+      .then((json) => {
+        setCharacters(json["users_list"]);
+      })
+
       .catch((error) => {
         console.log(error);
       });
@@ -35,7 +46,6 @@ export default function MyApp() {
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
       <Form handleSubmit={updateList} />
-
     </div>
   );
 }
