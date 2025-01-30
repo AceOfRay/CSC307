@@ -16,5 +16,15 @@ function postUser(person) {
   return promise;
 }
 
-export { fetchUsers, postUser };
+function deleteUser(id) {
+  const promise = fetch(`http://localhost:8000/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type" : "application/json"
+    },
+  })
+  return promise;
+}
+
+export { fetchUsers, postUser, deleteUser };
 

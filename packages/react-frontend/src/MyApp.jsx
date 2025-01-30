@@ -2,28 +2,38 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
-import { fetchUsers, postUser } from "./functions";
+import { fetchUsers, postUser, deleteUser } from "./functions";
 
 export default function MyApp() {
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+  function removeOneCharacter(id) {
+    const updated = deleteUser(id);
+    updated.then((promise) => {
+      if (promise.status === 204) {
+        console.log("User Successfully Deleted");
+        const updated = characters.filter((character) => {
+          return character.id !== id;
+        });
+        setCharacters(updated);
+      } else if (promise.status === 404) {
+        console.log("User Not Found");
+      }
+    })
+    
   }
 
   function updateList(person) {
     postUser(person)
       .then((promise) => {
         if (promise.status === 201) {
-          promi
-          console.log(promise.body);
-          setCharacters([...characters, person])
+          return promise.json();
         } else {
           console.log(`Status Code ${promise.status} | User not created`)
         }
+      })
+      .then((json) => {
+        setCharacters([...characters, json])
       })
       .catch((error) => {
         console.log(error);
