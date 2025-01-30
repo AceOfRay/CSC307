@@ -46,19 +46,16 @@ app.get("/users/:job/:name", (req, res) => {
 })
 
 app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-  addUser(userToAdd);
-  res.status(201).send();
+  res.status(201).send(addUser(req.body));
 });
 
 app.delete("/users/:id", (req, res) => {
-  const idToDelete = req.params["id"];
+  const idToDelete = req.params.id;
   const newList = deleteUserById(idToDelete)
   if (newList === undefined) {
-    res.status(500).send("Internal Server Error")
+    res.status(404).send("Resource Not Found")
   } else {
-    const result = { users_list: newList };
-    res.send(result);
+    res.status(204).send();
   }
 })
 
