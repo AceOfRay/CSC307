@@ -14,7 +14,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "express-backend": "file:"
+    "express-backend": "file:",
+    "mongoose": "^8.9.6"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
