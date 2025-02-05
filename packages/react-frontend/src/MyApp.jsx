@@ -13,7 +13,7 @@ export default function MyApp() {
       if (promise.status === 204) {
         console.log("User Successfully Deleted");
         const updated = characters.filter((character) => {
-          return character.id !== id;
+          return character._id !== id;
         });
         setCharacters(updated);
       } else if (promise.status === 404) {
